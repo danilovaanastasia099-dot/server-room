@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавление компонента</title>
+    <link rel="stylesheet" href="/static/css/style.css?v=3">
+</head>
+<body>
+    <div class="add-container">
+        <h1 class="page-title">Добавление компонента</h1>
+
+        <form class="add-form" action="/server-components/add" method="POST" enctype="multipart/form-data">
+            <!-- Медиафайлы: выбор из проводника (друг под другом) -->
+            <div class="form-section">
+                <div class="form-group">
+                    <label for="video">Видео:</label>
+                    <input type="file" id="video" name="video" accept="video/*">
+                </div>
+                <div class="form-group">
+                    <label for="image">Фото:</label>
+                    <input type="file" id="image" name="image" accept="image/*">
+                </div>
+            </div>
+
+            <!-- Текстовые поля для ввода -->
+            <div class="form-section">
+                <div class="form-group">
+                    <label for="name">Название:</label>
+                    <input type="text" id="name" name="name" placeholder="Например: Intel Xeon E5" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Описание:</label>
+                    <textarea id="description" name="description" rows="4" placeholder="Краткое описание компонента..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="type">Тип:</label>
+                    <input type="text" id="type" name="type" placeholder="CPU / GPU / PSU / RAM / NIC / STORAGE" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="tdp">TDP (Вт):</label>
+                    <input type="number" id="tdp" name="tdp" placeholder="Например: 120" min="0">
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Панель навигации в ту же ширину, что и основная часть (420px) -->
+    <nav class="bottom-nav" style="position: fixed; bottom: 0; left: 50%; right: auto; transform: translateX(-50%); width: 100%; max-width: 420px; box-sizing: border-box;">
+        <a href="/server-components/feed" class="nav-item">
+            <span>Лента</span>
+        </a>
+        <a href="/server-components/add" class="nav-item active">
+            <span>Добавление</span>
+        </a>
+        <a href="/server-components/cards" class="nav-item">
+            <span>Плитка</span>
+        </a>
+    </nav>
+</body>
+</html>

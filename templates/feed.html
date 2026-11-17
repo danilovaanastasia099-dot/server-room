@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лента компонентов</title>
+    <link rel="stylesheet" href="/static/css/style.css?v=3">
+</head>
+<body>
+    <div class="feed-container">
+        <video autoplay muted loop class="feed-video">
+            <source src="{{ .serverComponent.VideoURL }}" type="video/mp4">
+        </video>
+
+        <div class="feed-content">
+            <div class="overlay-bottom">
+                <!-- Левая часть: название + описание -->
+                <div class="left-info">
+                    <h1 class="feed-title">{{ .serverComponent.Name }}</h1>
+                    <div class="feed-description">
+                        {{ if .expanded }}
+                            <p>{{ .serverComponent.Description }}</p>
+                            <a href="{{ .lessURL }}" class="desc-toggle">Меньше</a>
+                        {{ else }}
+                            <p>{{ .shortDesc }}</p>
+                            {{ if ne .shortDesc .serverComponent.Description }}
+                                <a href="{{ .moreURL }}" class="desc-toggle">Ещё</a>
+                            {{ end }}
+                        {{ end }}
+                    </div>
+                </div>
+
+                <!-- Правая часть: параметры + иконки -->
+                <div class="right-controls">
+                    <div class="feed-params">
+                        <div class="param-item">
+                            <span class="param-label">Тип:</span>
+                            <span class="param-value">{{ .serverComponent.Type }}</span>
+                        </div>
+                        <div class="param-item">
+                            <span class="param-label">TDP:</span>
+                            <span class="param-value">{{ .serverComponent.TDP }} Вт</span>
+                        </div>
+                    </div>
+
+                    <div class="feed-actions">
+                        <!-- Лайк: без рамки, только сердечко и цифра -->
+                        <form action="/server-components/like/{{ .serverComponent.ID }}" method="POST" class="like-form" style="display: inline-flex; margin: 0; padding: 0; border: none; background: transparent;">
+                            <button type="submit" class="like-button {{ if .liked }}liked{{ end }}" style="background: transparent; border: none; outline: none; box-shadow: none; padding: 0; margin: 0; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; color: #fff;">
+                                <svg class="heart-icon" viewBox="0 0 24 24" style="width: 26px; height: 26px; fill: {{ if .liked }}#e03030{{ else }}rgba(255,255,255,0.85){{ end }};">
+                                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                </svg>
+                                <span style="font-weight: 600; font-size: 15px; color: #fff;">{{ .likes }}</span>
+                            </button>
+                        </form>
+
+                        <!-- Следующий: иконка-стрелка вниз -->
+                        <a href="/server-components/feed/{{ .serverComponent.ID }}?next=true" class="next-button" title="Следующий">
+                            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Панель навигации в ту же ширину, что и основная часть (420px) -->
+    <nav class="bottom-nav" style="position: fixed; bottom: 0; left: 50%; right: auto; transform: translateX(-50%); width: 100%; max-width: 420px; box-sizing: border-box;">
+        <a href="/server-components/feed" class="nav-item active">
+            <span>Лента</span>
+        </a>
+        <a href="/server-components/add" class="nav-item">
+            <span>Добавление</span>
+        </a>
+        <a href="/server-components/cards" class="nav-item">
+            <span>Плитка</span>
+        </a>
+    </nav>
+</body>
+</html>
