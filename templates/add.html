@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавление компонента</title>
+    <link rel="stylesheet" href="/static/css/style.css?v=6">
+</head>
+<body>
+    <div class="add-container">
+        <h1 class="page-title">Добавление компонента</h1>
+
+        {{ if not .hasDraft }}
+        <form class="add-form" action="/server-components/add" method="POST">
+            <div class="form-section">
+                <span class="status-badge draft-badge">Черновик</span>
+                
+                <div class="form-group">
+                    <label for="name">Название компонента:</label>
+                    <input type="text" id="name" name="name" placeholder="Например: Intel Xeon Platinum 8380" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="image">Фото:</label>
+                    <input type="file" id="image" name="image" accept="image/*">
+                </div>
+
+                <div class="form-group">
+                    <label for="video">Видео:</label>
+                    <input type="file" id="video" name="video" accept="video/*">
+                </div>
+
+                <button type="submit" class="submit-button">Далее</button>
+            </div>
+        </form>
+
+        {{ else }}
+        <form class="add-form" action="/server-components/publish/{{ .draft.ID }}" method="POST">
+            <div class="form-section">
+                <div class="draft-header-row">
+                    <span class="status-badge active-draft-badge">Черновик</span>
+                </div>
+
+                <div class="media-preview-container">
+                    <div class="form-group">
+                        <label>Фото по умолчанию:</label>
+                        <img src="{{ .draft.ImageURL }}" class="draft-preview-media" alt="Фото компонента" onerror="this.onerror=null;this.src='/static/img/default.jpg';">
+                    </div>
+                    <div class="form-group">
+                        <label>Видео по умолчанию:</label>
+                        <video controls class="draft-preview-media" onerror="this.src='/static/img/default.mp4';">
+                            <source src="{{ .draft.VideoURL }}" type="video/mp4" onerror="this.parentElement.src='/static/img/default.mp4';">
+                        </video>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Название компонента:</label>
+                    <input type="text" id="name" name="name" value="{{ .draft.Name }}" readonly class="input-readonly">
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2 class="section-subtitle">Заполнение параметров для публикации</h2>
+
+                <div class="form-group">
+                    <label for="description">Краткая информация:</label>
+                    <textarea id="description" name="description" rows="3" placeholder="Введите краткое описание серверного компонента..." required>{{ .draft.Description }}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="type">Тип компонента:</label>
+                    <input type="text" id="type" name="type" placeholder="CPU / GPU / PSU / RAM / NIC / STORAGE" value="{{ .draft.ComponentType }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="tdp">Тепловыделение TDP, Вт:</label>
+                    <input type="number" id="tdp" name="tdp" placeholder="Например: 150" value="{{ if gt .draft.TDP 0 }}{{ .draft.TDP }}{{ end }}" min="1" required>
+                </div>
+
+                <button type="submit" class="submit-button">Опубликовать</button>
+            </div>
+        </form>
+        {{ end }}
+    </div>
+
+   
+    <nav class="bottom-nav">
+        <a href="/server-components/feed" class="nav-item">
+            <span>Лента</span>
+        </a>
+        <a href="/server-components/add" class="nav-item active">
+            <span>Добавление</span>
+        </a>
+        <a href="/server-components/cards" class="nav-item">
+            <span>Плитка</span>
+        </a>
+    </nav>
+</body>
+</html>

@@ -1,0 +1,261 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-10-21T18:00:00.000Z",
+  "__export_source": "insomnia.desktop.app:v2023.5.8",
+  "resources": [
+    {
+      "_id": "wrk_server_cooling",
+      "parentId": null,
+      "modified": 1729533600000,
+      "created": 1729533600000,
+      "name": "Lab 3 - Расчет тепловыделения серверной (REST API)",
+      "description": "Коллекция REST API для сдачи ЛР 3",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
+      "_id": "req_1",
+      "parentId": "wrk_server_cooling",
+      "modified": 1729533600000,
+      "created": 1729533600000,
+      "url": "http://localhost:8080/api/server-components?min_tdp=100",
+      "name": "1. GET Список услуг с фильтром",
+      "description": "Список опубликованных услуг с признаком is_creator",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "min_tdp",
+          "value": "100",
+          "disabled": false
+        }
+      ],
+      "headers": [],
+      "_type": "request"
+    },
+    {
+      "_id": "req_2",
+      "parentId": "wrk_server_cooling",
+      "modified": 1729533600000,
+      "created": 1729533600000,
+      "url": "http://localhost:8080/api/server-components",
+      "name": "2. POST Добавить новую услугу с картинкой и видео",
+      "description": "Добавление черновика с реальной загрузкой в MinIO",
+      "method": "POST",
+      "body": {
+        "mimeType": "multipart/form-data",
+        "params": [
+          {
+            "name": "name",
+            "value": "Supermicro GPU Server SYS-420GP"
+          },
+          {
+            "name": "image",
+            "type": "file",
+            "fileName": "media/gpu-rtx.jpg"
+          },
+          {
+            "name": "video",
+            "type": "file",
+            "fileName": "media/gpu-rtx.mp4"
+          }
+        ]
+      },
+      "parameters": [],
+      "headers": [],
+      "_type": "request"
+    },
+    {
+      "_id": "req_3",
+      "parentId": "wrk_server_cooling",
+      "modified": 1729533600000,
+      "created": 1729533600000,
+      "url": "http://localhost:8080/api/server-components/draft",
+      "name": "3. GET Получить поля черновика (без ID)",
+      "description": "Получение черновика текущего пользователя",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "_type": "request"
+    },
+    {
+      "_id": "req_4",
+      "parentId": "wrk_server_cooling",
+      "modified": 1729533600000,
+      "created": 1729533600000,
+      "url": "http://localhost:8080/api/server-components/9/publish",
+      "name": "4. PUT Опубликовать услугу",
+      "description": "Смена статуса на 'опубликован', проставление formed_at",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"description\": \"Высокопроизводительный сервер для вычислений ИИ с поддержкой 4 GPU и общим TDP 1200 Вт\",\n  \"component_type\": \"SERVER_UNIT\",\n  \"tdp\": 1200\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "_type": "request"
+    },
+    {
+      "_id": "req_5",
+      "parentId": "wrk_server_cooling",
+      "modified": 1729533600000,
+      "created": 1729533600000,
+      "url": "http://localhost:8080/api/server-components/feed",
+      "name": "5. GET Получить ленту без ID",
+      "description": "Первая карточка ленты с признаком is_liked",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "_type": "request"
+    },
+    {
+      "_id": "req_6",
+      "parentId": "wrk_server_cooling",
+      "modified": 1729533600000,
+      "created": 1729533600000,
+      "url": "http://localhost:8080/api/server-components/feed/1?next=true",
+      "name": "6. GET Получить ленту по ID ?next=true",
+      "description": "Следующая карточка ленты по ID",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "next",
+          "value": "true"
+        }
+      ],
+      "headers": [],
+      "_type": "request"
+    },
+    {
+      "_id": "req_7",
+      "parentId": "wrk_server_cooling",
+      "modified": 1729533600000,
+      "created": 1729533600000,
+      "url": "http://localhost:8080/api/server-components/1/like",
+      "name": "7. POST Поставить лайк (0/1)",
+      "description": "Установка лайка (1 — поставить, 0 — снять)",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"like\": 1\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "_type": "request"
+    },
+    {
+      "_id": "req_8",
+      "parentId": "wrk_server_cooling",
+      "modified": 1729533600000,
+      "created": 1729533600000,
+      "url": "http://localhost:8080/api/server-components/9",
+      "name": "8. DELETE Удалить услугу (soft delete)",
+      "description": "Логическое удаление услуги текущего пользователя",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "_type": "request"
+    },
+    {
+      "_id": "req_9",
+      "parentId": "wrk_server_cooling",
+      "modified": 1729533600000,
+      "created": 1729533600000,
+      "url": "http://localhost:8080/api/users/register",
+      "name": "9. POST Зарегистрировать нового пользователя",
+      "description": "Регистрация нового пользователя в системе",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"login\": \"dc_engineer\",\n  \"password\": \"securepassword123\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "_type": "request"
+    },
+    {
+      "_id": "req_10",
+      "parentId": "wrk_server_cooling",
+      "modified": 1729533600000,
+      "created": 1729533600000,
+      "url": "http://localhost:8080/api/users/login",
+      "name": "10. POST Аутентификация (заглушка)",
+      "description": "Аутентификация с выдачей токена для ЛР 4",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"login\": \"admin\",\n  \"password\": \"password123\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "_type": "request"
+    },
+    {
+      "_id": "req_11",
+      "parentId": "wrk_server_cooling",
+      "modified": 1729533600000,
+      "created": 1729533600000,
+      "url": "http://localhost:8080/api/users/logout",
+      "name": "11. POST Деавторизация (заглушка)",
+      "description": "Деавторизация пользователя (заглушка для ЛР 4)",
+      "method": "POST",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "_type": "request"
+    },
+    {
+      "_id": "req_12",
+      "parentId": "wrk_server_cooling",
+      "modified": 1729533600000,
+      "created": 1729533600000,
+      "url": "http://localhost:8080/api/users/1/components",
+      "name": "12. GET Пользователь со списком услуг (Вложенная сериализация)",
+      "description": "Объект пользователя и массив созданных им услуг",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "_type": "request"
+    },
+    {
+      "_id": "req_13",
+      "parentId": "wrk_server_cooling",
+      "modified": 1729533600000,
+      "created": 1729533600000,
+      "url": "http://localhost:8080/api/server-components/1",
+      "name": "13. GET Услуга с данными создателя (Вложенная сериализация)",
+      "description": "Услуга с вложенным объектом Creator",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "_type": "request"
+    }
+  ]
+}
