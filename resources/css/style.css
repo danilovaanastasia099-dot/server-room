@@ -1,0 +1,643 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300..900;1,300..900&display=swap');
+
+/* ─── Фирменный стиль L'Occitane en Provence (https://www.loccitane.ru) ─── */
+:root {
+    --color-white: #FFFFFF;
+    --color-cream: #FBF9F5;       /* Тёплый прованский фон сайта L'Occitane */
+    --color-yellow: #FFCB00;      /* Фирменный жёлтый L'Occitane (.a-btn #ffcb00) */
+    --color-yellow-hover: #FFE580;/* Светло-жёлтый при наведении */
+    --color-navy: #001022;        /* Фирменный глубокий тёмно-синий/угольный текст и фон */
+    --color-navy-hover: #36495E;  /* Оттенок при наведении */
+    --color-gray-light: #EFEFEF;  /* Светло-серый (.a-btn--filled1) */
+    --color-border: #E8E3D9;      /* Тонкие границы блоков */
+    --color-liked: #E03030;       /* Красный для активного лайка */
+    --color-danger: #D32F2F;      /* Цвет для кнопки удаления */
+    --content-width: 420px;       /* Фиксированная ширина vibes-формата */
+    --border-radius: 3px;         /* Строгая форма кнопок и карточек L'Occitane (прямые углы 0-3px) */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    color: var(--color-navy);
+}
+
+body {
+    background: var(--color-cream);
+    min-height: 100vh;
+    padding-bottom: 85px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ─── Нижняя навигация L'Occitane — ширина строго 420px ─── */
+.bottom-nav {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    width: 100% !important;
+    max-width: var(--content-width) !important;
+    box-sizing: border-box !important;
+    background: var(--color-white);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 68px;
+    box-shadow: 0 -3px 12px rgba(0, 16, 34, 0.08);
+    border-top: 3px solid var(--color-yellow);
+    z-index: 1000;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    padding: 10px 14px;
+    transition: all 0.2s ease-in-out;
+    flex: 1;
+    justify-content: center;
+    border-radius: var(--border-radius);
+}
+
+.nav-item span {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--color-navy);
+}
+
+.nav-item:hover {
+    background: #FFF9E6;
+}
+
+.nav-item.active {
+    background: #FFF9E6;
+}
+
+.nav-item.active span {
+    font-weight: 800;
+    color: var(--color-navy);
+}
+
+/* ─── Лента (Формат Reels/TikTok/Vibes) ─── */
+.feed-container {
+    position: relative;
+    width: 100%;
+    max-width: var(--content-width);
+    margin: 0 auto;
+    height: 640px;
+    overflow: hidden;
+    border-radius: var(--border-radius);
+    box-shadow: 0 6px 20px rgba(0, 16, 34, 0.12);
+    background: #000;
+}
+
+.feed-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: var(--border-radius);
+}
+
+.feed-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 16, 34, 0.92) 0%, rgba(0, 16, 34, 0.45) 60%, transparent 100%);
+    padding: 18px;
+    color: var(--color-white);
+}
+
+.overlay-bottom {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 12px;
+}
+
+.left-info {
+    max-width: 62%;
+}
+
+.right-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+    min-width: 90px;
+}
+
+.feed-title {
+    color: var(--color-white);
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    margin-bottom: 6px;
+}
+
+.feed-description {
+    color: var(--color-white);
+    margin-bottom: 8px;
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+.feed-description p {
+    color: #F0EDE5;
+    margin-bottom: 4px;
+}
+
+.feed-params {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-end;
+}
+
+.param-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.param-label {
+    color: var(--color-yellow);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+.param-value {
+    color: var(--color-white);
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.feed-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+/* ─── Лайки — отображение из БД ─── */
+.like-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0;
+    margin: 0;
+    color: var(--color-white);
+}
+
+.like-badge .heart-icon {
+    width: 26px;
+    height: 26px;
+    fill: var(--color-liked);
+}
+
+.like-badge span {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--color-white);
+}
+
+.card-like-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.card-like-badge .heart-icon-small {
+    width: 17px;
+    height: 17px;
+    fill: var(--color-liked);
+}
+
+.card-like-badge span {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-navy);
+}
+
+/* Кнопка "Следующий" — круглая иконка со стрелкой */
+.next-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 203, 0, 0.25);
+    border: 1px solid rgba(255, 203, 0, 0.6);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.15s ease;
+    color: var(--color-white);
+}
+
+.next-button:hover {
+    background: rgba(255, 203, 0, 0.45);
+    transform: translateY(2px);
+}
+
+.next-button svg {
+    stroke: var(--color-white);
+}
+
+.desc-toggle {
+    display: inline-block;
+    color: var(--color-yellow);
+    text-decoration: underline;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* ─── Кнопка логического удаления карточки ─── */
+.delete-card-form {
+    display: inline-flex;
+    margin: 0;
+    padding: 0;
+}
+
+.card-delete-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    color: #888;
+    transition: color 0.2s ease, transform 0.15s ease;
+}
+
+.card-delete-button:hover {
+    color: var(--color-danger);
+    transform: scale(1.15);
+}
+
+/* ─── Страница добавления ─── */
+.add-container {
+    width: 100%;
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: 20px 16px;
+}
+
+.page-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--color-navy);
+}
+
+.section-subtitle {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+    color: var(--color-navy);
+    border-bottom: 2px solid var(--color-yellow);
+    padding-bottom: 4px;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: var(--border-radius);
+    margin-bottom: 12px;
+}
+
+.draft-badge {
+    background: #FFF4C2;
+    color: #6D4C00;
+    border: 1px solid #FFE082;
+}
+
+.active-draft-badge {
+    background: #E8F5E9;
+    color: #2E7D32;
+    border: 1px solid #A5D6A7;
+}
+
+.media-preview-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.draft-preview-media {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--color-border);
+    background: #F0ECE4;
+}
+
+.input-readonly {
+    background-color: #F7F5F0 !important;
+    cursor: not-allowed;
+    color: #555 !important;
+}
+
+.add-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-section {
+    background: var(--color-white);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-shadow: 0 2px 8px rgba(0, 16, 34, 0.04);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: var(--color-navy);
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group textarea {
+    padding: 10px 12px;
+    border: 1px solid #D8D2C5;
+    border-radius: var(--border-radius);
+    font-size: 14px;
+    background: #FAF9F6;
+    transition: border-color 0.2s ease, background 0.2s ease;
+    width: 100%;
+}
+
+.form-group input[type="file"] {
+    padding: 6px 0;
+    font-size: 13px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-yellow);
+    background: #FFFFFF;
+}
+
+/* Кнопка отправки формы («Далее» / «Опубликовать») в стиле L'Occitane */
+.submit-button {
+    background-color: var(--color-yellow);
+    color: var(--color-navy);
+    border: 0;
+    padding: 14px;
+    border-radius: var(--border-radius);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    width: 100%;
+    margin-top: 6px;
+}
+
+.submit-button:hover {
+    background-color: var(--color-yellow-hover);
+}
+
+/* ─── Плитка / Каталог ─── */
+.cards-container {
+    width: 100%;
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: 20px 16px;
+}
+
+.filter-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 22px;
+    background: var(--color-white);
+    padding: 14px 16px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--color-border);
+    box-shadow: 0 2px 8px rgba(0, 16, 34, 0.04);
+}
+
+.filter-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.filter-row input[type="text"] {
+    flex: 2;
+    padding: 8px 10px;
+    border: 1px solid #D8D2C5;
+    border-radius: var(--border-radius);
+    background: #FAF9F6;
+    font-size: 13px;
+}
+
+.filter-row input[type="number"] {
+    flex: 1.2;
+    padding: 8px 10px;
+    border: 1px solid #D8D2C5;
+    border-radius: var(--border-radius);
+    background: #FAF9F6;
+    font-size: 13px;
+}
+
+.filter-row button {
+    background-color: var(--color-yellow);
+    color: var(--color-navy);
+    border: 0;
+    padding: 9px 14px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.6px;
+    transition: background-color 0.2s ease-in-out;
+    white-space: nowrap;
+}
+
+.filter-row button:hover {
+    background-color: var(--color-yellow-hover);
+}
+
+.clear-filter {
+    color: var(--color-navy);
+    text-decoration: underline;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    text-align: right;
+}
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+.card {
+    background: var(--color-white);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--color-border);
+    overflow: hidden;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 8px rgba(0, 16, 34, 0.04);
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 16, 34, 0.1);
+    border-color: var(--color-yellow);
+}
+
+.card-link {
+    display: block;
+    text-decoration: none;
+}
+
+.card-image {
+    width: 100%;
+    height: 135px;
+    object-fit: cover;
+    background: #F5F2EB;
+}
+
+.card-content {
+    padding: 12px;
+}
+
+.card-title {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    line-height: 1.35;
+    color: var(--color-navy);
+}
+
+.card-params {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.card-type {
+    background: #FFF4C2;
+    color: var(--color-navy);
+    padding: 3px 6px;
+    border-radius: 2px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.card-tdp {
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--color-navy);
+}
+
+.card-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #F0ECE4;
+    padding-top: 8px;
+}
+
+.empty-hint {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 30px;
+    color: #777;
+    font-size: 14px;
+}
+
+/* ─── Страница ошибки ─── */
+.error-container {
+    max-width: 400px;
+    margin: 80px auto;
+    text-align: center;
+    background: var(--color-white);
+    padding: 40px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--color-border);
+    box-shadow: 0 4px 16px rgba(0, 16, 34, 0.08);
+}
+
+.error-container h1 {
+    font-size: 20px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+.error-container p {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #555;
+}
+
+.back-button {
+    display: inline-block;
+    margin-top: 20px;
+    background: var(--color-yellow);
+    color: var(--color-navy);
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    transition: background-color 0.2s ease;
+}
+
+.back-button:hover {
+    background: var(--color-yellow-hover);
+}
